@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv_app_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GlassPaper Wallpaper Changer"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginTop="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_status_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_app_heading">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scheduler Status:"
+            android:textSize="18sp"
+            android:layout_marginEnd="8dp"/>
+
+        <View
+            android:id="@+id/view_status_circle"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:background="@drawable/circle_red"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_status_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inactive"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="Active"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_change_now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Wallpaper Now"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_status_container" />
+
+    <Button
+        android:id="@+id/btn_toggle_scheduler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Activate Scheduler"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_change_now" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
