@@ -59,4 +59,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.jsoup)
+    implementation(libs.material)
 }

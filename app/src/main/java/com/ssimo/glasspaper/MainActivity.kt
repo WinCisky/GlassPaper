@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
 
         Log.i(TAG, "Activity created.")
 
-        val btnChangeNow: Button = findViewById(R.id.btn_change_now) // Your button's ID
+        val btnChangeNow: Button = findViewById(R.id.set_wallpaper_button) // Your button's ID
 
         btnChangeNow.setOnClickListener {
             Log.d(TAG, "Change Now button clicked.")
