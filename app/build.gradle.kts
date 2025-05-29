@@ -60,4 +60,5 @@ dependencies {
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.jsoup)
     implementation(libs.material)
+    implementation(libs.glide)
 }

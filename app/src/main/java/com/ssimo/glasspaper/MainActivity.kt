@@ -6,12 +6,22 @@ import androidx.work.*
 import java.util.concurrent.TimeUnit
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 
 class MainActivity : ComponentActivity() {
     private val TAG = "MainActivity"
+    private lateinit var wallpaperPreview: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +37,49 @@ class MainActivity : ComponentActivity() {
         }
 
         // ... You might have other buttons or UI elements ...
+
+        val basePageUrl = "https://wallpapers.opentrust.it/"
+        wallpaperPreview = findViewById(R.id.wallpaper_preview)
+
+        // Launch a coroutine on the IO dispatcher for network operation
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                val imageUrl = getImageUrlFromHtml(basePageUrl)
+                Log.d(TAG, "$imageUrl IMAGE URL MAIN")
+
+                // Switch back to the Main dispatcher to update the UI with Glide
+                withContext(Dispatchers.Main) {
+                    Glide.with(this@MainActivity)
+                        .load(imageUrl)
+                        .placeholder(R.drawable.image)
+                        .error(R.drawable.image)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .into(wallpaperPreview)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error fetching or loading image: ${e.message}")
+                e.printStackTrace()
+                // Optionally show an error message to the user
+                withContext(Dispatchers.Main) {
+                    // Update UI to show error, e.g., show a default image or a toast
+                    Glide.with(this@MainActivity)
+                        .load(R.drawable.image) // Load a default error image
+                        .into(wallpaperPreview)
+                }
+            }
+        }
+    }
+
+    private fun getImageUrlFromHtml(htmlUrl: String): String? {
+        try {
+            val doc: Document = Jsoup.connect(htmlUrl).get()
+            val docBody = doc.body()
+            return docBody.text()
+        } catch (e: Exception) {
+            Log.e(TAG, "Error parsing HTML or extracting image URL", e)
+            e.printStackTrace()
+        }
+        return null
     }
 
     /**
