@@ -51,8 +51,6 @@ class MainActivity : ComponentActivity() {
                 withContext(Dispatchers.Main) {
                     Glide.with(this@MainActivity)
                         .load(imageUrl)
-                        .placeholder(R.drawable.image)
-                        .error(R.drawable.image)
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(wallpaperPreview)
                 }
