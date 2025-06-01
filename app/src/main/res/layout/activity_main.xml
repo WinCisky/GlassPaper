@@ -48,6 +48,7 @@
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp"
+        android:visibility="invisible"
         app:cardBackgroundColor="#212121"
         app:layout_constraintBottom_toTopOf="@+id/card_container"
         app:layout_constraintStart_toStartOf="parent">

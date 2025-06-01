@@ -18,11 +18,11 @@ import java.net.HttpURLConnection
 import java.net.URL
 import kotlin.math.abs
 import kotlin.math.max // For Math.max
+import androidx.core.content.edit
 
 class WallpaperWorker(val appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {
 
-    private val TAG = "WallpaperWorker"
     // Define a small epsilon for comparing float aspect ratios
     private val ASPECT_RATIO_EPSILON = 0.01f
 
@@ -51,7 +51,14 @@ class WallpaperWorker(val appContext: Context, workerParams: WorkerParameters) :
                     // if (success) bitmap.recycle() // Be very careful with this line
 
                     if (success) {
-                        Log.i(TAG, "Wallpaper set successfully. Worker finished.")
+                        val sharedPrefs = appContext.getSharedPreferences("wallpaper_prefs", Context.MODE_PRIVATE)
+                        sharedPrefs.edit {
+                            putLong(
+                                "last_successful_run_time",
+                                System.currentTimeMillis()
+                            )
+                        }
+                        Log.d(TAG, "Wallpaper changed successfully and last run time stored.")
                         Result.success()
                     } else {
                         Log.e(TAG, "Failed to set wallpaper.")
@@ -273,5 +280,10 @@ class WallpaperWorker(val appContext: Context, workerParams: WorkerParameters) :
             Log.e(TAG, "Error setting wallpaper", e)
             return false
         }
+    }
+
+    companion object {
+        const val WORK_NAME = "WallpaperWorker"
+        private const val TAG = "WallpaperWorker"
     }
 }

@@ -36,6 +36,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 }
 
@@ -61,4 +62,5 @@ dependencies {
     implementation(libs.jsoup)
     implementation(libs.material)
     implementation(libs.glide)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
 }
